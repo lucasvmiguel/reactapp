@@ -1,47 +1,36 @@
 'use strict';
 
+import dispatcher from '../dispatcher/dispatcher';
+import R from 'ramda';
+
 let EventEmitter = require('events').EventEmitter;
+let event = new EventEmitter();
 
+//TODO: nomeclaturas de eventos serem constantes e não strings
 class PurchaseStateStore {
-
-  constructor() {
-    throw 'Cannot iniatilize this class(Singleton class)';
+  constructor(){
+    //TODO: carregar o state inicial aqui(cookie(lib), create request(lib), send(lib), set in state)
+  }
+  get(){
+    return this;
+  }
+  register(){
+    dispatcher.register(function(action){
+      switch(action.actionType){
+        case 'CHANGED_ORDERID':
+          this.orderId = action.orderId;
+          event.emit('CHANGED_ORDERID');
+          break;
+      }
+    });
   }
 
-  create(){
-    this.instance = {
-      orderId: 999
-    }
-  }
-
-  static Instance() {
-    if (!this.instance) {
-      this.create();
-    }
-
-    return this.instance;
-  }
-
-  Get(){
-    if (!this.instance) {
-      this.create();
-    }
-
-    return this.instance;
-  }
-
-  Change(prop, value){
-    if (!this.instance) {
-      this.create();
-    }
-
-    this.instance[prop] = value;
-    EventEmitter.emit('PurchaseStateStore:' + prop, value);
-  }
-
-  Listen(prop, callback){
-    eventEmitter.on('PurchaseStateStore:' + prop, callback);
+  listen(callback) {
+    event.on('CHANGED_ORDERID', callback);
   }
 }
 
-export default PurchaseStateStore;
+let state = new PurchaseStateStore();
+state.register();
+
+export default state;

@@ -52,8 +52,10 @@
     "webpack-dev-server": "^1.10.1"
   },
   "dependencies": {
+    "flux": "^2.1.1",
     "lodash": "^3.10.1",
     "normalize.css": "^3.0.3",
+    "ramda": "^0.17.1",
     "react": "^0.13.3",
     "react-cookie": "^0.3.4",
     "sass-loader": "^1.0.1"

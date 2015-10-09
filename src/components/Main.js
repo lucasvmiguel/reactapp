@@ -2,7 +2,7 @@ require('normalize.css');
 require('styles/App.css');
 import React from 'react/addons';
 
-let OrderIdBlock = require('../components/OrderIdBlock')
+let OrderIdBlock = require('../components/OrderIdBlock/OrderIdBlock')
 
 class AppComponent extends React.Component {
   render() {
