@@ -1,13 +1,10 @@
 'use strict';
 
-import dispatcher from '../dispatcher/dispatcher';
+import PurchaseState from '../states/PurchaseState';
 
 class Action{
   static changeOrderId(orderId){
-    dispatcher.dispatch({
-      actionType: 'CHANGED_ORDERID',
-      orderId: orderId
-    });
+    PurchaseState.Change('orderId', orderId);
   }
 }
 

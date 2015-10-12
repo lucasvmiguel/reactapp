@@ -1,24 +1,25 @@
 'use strict';
 
 require('styles//OrderIdBlock.scss');
+
+//dependencies
 import React from 'react/addons';
-import PurchaseStateStore from 'stores/PurchaseStateStore';
-import action from '../../actions/action';
+import PurchaseState from '../../states/PurchaseState';
+
+//components
+import OrderIdNumber from './OrderIdNumber';
+import OrderMessage from './OrderMessage';
 
 class OrderIdBlock extends React.Component {
   constructor(){
     super();
-    this.state = PurchaseStateStore.get();
+    this.state = PurchaseState.Get();
   }
 
   componentDidMount(){
-    PurchaseStateStore.listen(() => {
-      this.state = PurchaseStateStore.get();
+    PurchaseState.Listen('orderId', (orderId) => {
+      this.setState(PurchaseState.Get());
     });
-  }
-
-  handleSubmit(){
-    action.changeOrderId('oi!');
   }
 
   render() {
@@ -26,13 +27,10 @@ class OrderIdBlock extends React.Component {
       <div className="orderidblock-component">
         <div className="row">
           <div className="col-md-8 col-xs-12">
-            <form onSubmit={this.handleSubmit}>
-              <input />
-              <button>Change State</button>
-            </form>
+            <OrderMessage closed={this.state.closed}/>
           </div>
           <div className="col-md-4 col-xs-12">
-            {this.state.orderId}
+            <OrderIdNumber number={this.state.orderId}/>
           </div>
         </div>
       </div>
